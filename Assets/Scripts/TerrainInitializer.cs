@@ -20,7 +20,10 @@ public class TerrainInitializer : MonoBehaviour
         }
 
         LoadAndSpawnTiles();
+    }
 
+    private void Start()
+    {
         FieldGroupManager.Instance.BuildGroups();
     }
 
