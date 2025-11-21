@@ -20,6 +20,8 @@ public class FieldManager : MonoBehaviour
     private FieldState currentState = FieldState.EMPTY;
     private Renderer fieldRenderer;
 
+    public FieldGroup group; // assigned by FieldGroupManager
+
     private void Awake()
     {
         fieldRenderer = GetComponent<Renderer>();
@@ -29,10 +31,19 @@ public class FieldManager : MonoBehaviour
         UpdateColor();
     }
 
+    public void Action()
+    {
+        if (group != null && !FieldGroupManager.Instance.CanInteract(this))
+            return;
+
+        GoToNextState();
+    }
+
+
     /// <summary>
     /// Passe au prochain état cyclique
     /// </summary>
-    public void Action()
+    public void GoToNextState()
     {
         currentState = (FieldState)(((int)currentState + 1) % System.Enum.GetNames(typeof(FieldState)).Length);
         UpdateColor();
